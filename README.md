@@ -198,7 +198,8 @@ You should find that your ExpectimaxAgent wins about half the time, while your A
 
 The correct implementation of expectimax will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.
 
-Question 5 (6 points): Evaluation Function
+## Question 5 (6 points): Evaluation Function
+
 Write a better evaluation function for pacman in the provided function betterEvaluationFunction. The evaluation function should evaluate states, rather than actions like your reflex agent evaluation function did. You may use any tools at your disposal for evaluation, including your search code from the last project. With depth 2 search, your evaluation function should clear the smallClassic layout with one random ghost more than half the time and still run at a reasonable rate (to get full credit, Pacman should be averaging around 1000 points when he's winning).
 
 python autograder.py -q q5
