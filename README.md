@@ -43,6 +43,9 @@ The code for this project contains the following files, available as a zip archi
 | Files you'll edit: | |
 | --- | --- |
 | `multiAgents.py` |	Where all of your multi-agent search agents will reside. |
+
+| Files you might want to look at: | |
+| --- | --- |
 | `pacman.py` |	The main file that runs Pacman games. This file also describes a Pacman GameState type, which you will use extensively in this project |
 | `game.py` |	The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid. |
 | `util.py` |	Useful data structures for implementing search algorithms. |
@@ -98,11 +101,13 @@ Try out your reflex agent on the default `mediumClassic` layout with one ghost o
 
 How does your agent fare? It will likely often die with 2 ghosts on the default board, unless your evaluation function is quite good.
 
-**Note:** As features, try the reciprocal of important values (such as distance to food) rather than just the values themselves.
+*Note:* As features, try the reciprocal of important values (such as distance to food) rather than just the values themselves.
 
-**Note:** The evaluation function you're writing is evaluating state-action pairs; in later parts of the project, you'll be evaluating states.
+*Note:* The evaluation function you're writing is evaluating state-action pairs; in later parts of the project, you'll be evaluating states.
 
-**Options:** Default ghosts are random; you can also play for fun with slightly smarter directional ghosts using `-g DirectionalGhost`. If the randomness is preventing you from telling whether your agent is improving, you can use -f to run with a fixed random seed (same random choices every game). You can also play multiple games in a row with `-n`. Turn off graphics with `-q` to run lots of games quickly.
+*Note:* You may find it useful to view the internal contents of various objects for debugging. You can do this by printing the objects' string representations. For example, you can print `newGhostStates` with `print(str(newGhostStates))`.
+
+*Options:* Default ghosts are random; you can also play for fun with slightly smarter directional ghosts using `-g DirectionalGhost`. If the randomness is preventing you from telling whether your agent is improving, you can use `-f` to run with a fixed random seed (same random choices every game). You can also play multiple games in a row with `-n`. Turn off graphics with `-q` to run lots of games quickly.
 
 **Grading:** we will run your agent on the `openClassic` layout 10 times. You will receive 0 points if your agent times out, or never wins. You will receive 1 point if your agent wins at least 5 times, or 2 points if your agent wins all 10 games. You will receive an addition 1 point if your agent's average score is greater than 500, or 2 points if it is greater than 1000. You can try your agent out under these conditions with
 
