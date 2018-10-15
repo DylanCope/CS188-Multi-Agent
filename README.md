@@ -40,12 +40,13 @@ See the autograder tutorial in Project 0 for more information about using the au
 
 The code for this project contains the following files, available as a zip archive.
 
-|Files you'll edit: | |
+| Files you'll edit: | |
 | --- | --- |
 | `multiAgents.py` |	Where all of your multi-agent search agents will reside. |
 | `pacman.py` |	The main file that runs Pacman games. This file also describes a Pacman GameState type, which you will use extensively in this project |
 | `game.py` |	The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid. |
 | `util.py` |	Useful data structures for implementing search algorithms. |
+
 
 | Files you can ignore: | |
 | ------ | ----- |
@@ -113,6 +114,10 @@ To run it without graphics, use:
 
 Don't spend too much time on this question, though, as the meat of the project lies ahead.
 
+## Answer
+
+---
+
 ## Question 2 (5 points): Minimax
 
 Now you will write an adversarial search agent in the provided `MinimaxAgent` class stub in `multiAgents.py`. Your minimax agent should work with any number of ghosts, so you'll have to write an algorithm that is slightly more general than what you've previously seen in lecture. In particular, your minimax tree will have multiple min layers (one for each ghost) for every max layer.
@@ -170,46 +175,70 @@ The pseudo-code below represents the algorithm you should implement for this que
 
 To test and debug your code, run
 
-python autograder.py -q q3
-This will show what your algorithm does on a number of small trees, as well as a pacman game. To run it without graphics, use:
+`python autograder.py -q q3`
 
-python autograder.py -q q3 --no-graphics
+This will show what your algorithm does on a number of small trees, as well as a Pacman game. To run it without graphics, use:
+
+`python autograder.py -q q3 --no-graphics`
+
 The correct implementation of alpha-beta pruning will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.
+
+## Answer
+
+---
 
 ## Question 4 (5 points): Expectimax
 
-Minimax and alpha-beta are great, but they both assume that you are playing against an adversary who makes optimal decisions. As anyone who has ever won tic-tac-toe can tell you, this is not always the case. In this question you will implement the ExpectimaxAgent, which is useful for modeling probabilistic behavior of agents who may make suboptimal choices.
+Minimax and alpha-beta are great, but they both assume that you are playing against an adversary who makes optimal decisions. As anyone who has ever won tic-tac-toe can tell you, this is not always the case. In this question you will implement the `ExpectimaxAgent`, which is useful for modelling probabilistic behaviour of agents who may make suboptimal choices.
 
 As with the search and constraint satisfaction problems covered so far in this class, the beauty of these algorithms is their general applicability. To expedite your own development, we've supplied some test cases based on generic trees. You can debug your implementation on small the game trees using the command:
 
-python autograder.py -q q4
+`python autograder.py -q q4`
+
 Debugging on these small and manageable test cases is recommended and will help you to find bugs quickly. Make sure when you compute your averages that you use floats. Integer division in Python truncates, so that 1/2 = 0, unlike the case with floats where 1.0/2.0 = 0.5.
 
-Once your algorithm is working on small trees, you can observe its success in Pacman. Random ghosts are of course not optimal minimax agents, and so modeling them with minimax search may not be appropriate. ExpectimaxAgent, will no longer take the min over all ghost actions, but the expectation according to your agent's model of how the ghosts act. To simplify your code, assume you will only be running against an adversary which chooses amongst their getLegalActions uniformly at random.
+Once your algorithm is working on small trees, you can observe its success in Pacman. Random ghosts are of course not optimal minimax agents, and so modelling them with minimax search may not be appropriate. `ExpectimaxAgent`, will no longer take the min over all ghost actions, but the expectation according to your agent's model of how the ghosts act. To simplify your code, assume you will only be running against an adversary which chooses amongst their `getLegalActions` uniformly at random.
 
-To see how the ExpectimaxAgent behaves in Pacman, run:
+To see how the `ExpectimaxAgent` behaves in Pacman, run:
 
-python pacman.py -p ExpectimaxAgent -l minimaxClassic -a depth=3
+`python pacman.py -p ExpectimaxAgent -l minimaxClassic -a depth=3`
+
 You should now observe a more cavalier approach in close quarters with ghosts. In particular, if Pacman perceives that he could be trapped but might escape to grab a few more pieces of food, he'll at least try. Investigate the results of these two scenarios:
 
-python pacman.py -p AlphaBetaAgent -l trappedClassic -a depth=3 -q -n 10
-python pacman.py -p ExpectimaxAgent -l trappedClassic -a depth=3 -q -n 10
-You should find that your ExpectimaxAgent wins about half the time, while your AlphaBetaAgent always loses. Make sure you understand why the behavior here differs from the minimax case.
+`python pacman.py -p AlphaBetaAgent -l trappedClassic -a depth=3 -q -n 10`
+
+`python pacman.py -p ExpectimaxAgent -l trappedClassic -a depth=3 -q -n 10`
+
+You should find that your `ExpectimaxAgent` wins about half the time, while your `AlphaBetaAgent` always loses. Make sure you understand why the behavior here differs from the minimax case.
 
 The correct implementation of expectimax will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.
 
+---
+
+## Answer
+
 ## Question 5 (6 points): Evaluation Function
 
-Write a better evaluation function for pacman in the provided function betterEvaluationFunction. The evaluation function should evaluate states, rather than actions like your reflex agent evaluation function did. You may use any tools at your disposal for evaluation, including your search code from the last project. With depth 2 search, your evaluation function should clear the smallClassic layout with one random ghost more than half the time and still run at a reasonable rate (to get full credit, Pacman should be averaging around 1000 points when he's winning).
+Write a better evaluation function for Pacman in the provided function `betterEvaluationFunction`. The evaluation function should evaluate states, rather than actions like your reflex agent evaluation function did. You may use any tools at your disposal for evaluation, including your search code from the last project. With depth 2 search, your evaluation function should clear the `smallClassic` layout with one random ghost more than half the time and still run at a reasonable rate (to get full credit, Pacman should be averaging around 1000 points when he's winning).
 
-python autograder.py -q q5
-Grading: the autograder will run your agent on the smallClassic layout 10 times. We will assign points to your evaluation function in the following way:
+`python autograder.py -q q5`
+
+**Grading:** the autograder will run your agent on the `smallClassic` layout 10 times. We will assign points to your evaluation function in the following way:
 
 If you win at least once without timing out the autograder, you receive 1 points. Any agent not satisfying these criteria will receive 0 points.
+
 +1 for winning at least 5 times, +2 for winning all 10 times
+
 +1 for an average score of at least 500, +2 for an average score of at least 1000 (including scores on lost games)
+
 +1 if your games take on average less than 30 seconds on the autograder machine. The autograder is run on EC2, so this machine will have a fair amount of resources, but your personal computer could be far less performant (netbooks) or far more performant (gaming rigs).
+
 The additional points for average score and computation time will only be awarded if you win at least 5 times.
-Hints and Observations
+
+***Hints and Observations***
+
 As for your reflex agent evaluation function, you may want to use the reciprocal of important values (such as distance to food) rather than the values themselves.
+
 One way you might want to write your evaluation function is to use a linear combination of features. That is, compute values for features about the state that you think are important, and then combine those features by multiplying them by different values and adding the results together. You might decide what to multiply each feature by based on how important you think it is.
+
+## Answer
