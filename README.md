@@ -121,6 +121,28 @@ Don't spend too much time on this question, though, as the meat of the project l
 
 ## Answer
 
+```py
+def evaluationFunction(self, currentGameState, action):
+    successorGameState = currentGameState.generatePacmanSuccessor(action)
+    newPos = successorGameState.getPacmanPosition()
+    newFood = successorGameState.getFood()
+    newGhostStates = successorGameState.getGhostStates()
+
+    distToPacman = partial(manhattanDistance, newPos)
+    ghostScore = 0.01 * min(
+        ln(distToPacman(ghost.getPosition()) - 1 + ghost.scaredTimer)
+        for ghost in newGhostStates
+    )
+
+    totalFoodFeature = 1.0 / (1.0 + newFood.count())
+
+    ghostPositions = [ghost.getPosition() for ghost in newGhostStates]
+    distToClosestFood = min(map(distToPacman, ghostPositions), default=0)
+    closestFoodFeature = 10 / (1.0 + distToClosestFood)
+
+    return successorGameState.getScore() + ghostScore + totalFoodFeature + closestFoodFeature
+```
+
 ---
 
 ## Question 2 (5 points): Minimax
