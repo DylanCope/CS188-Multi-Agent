@@ -19,10 +19,10 @@ import util
 from game import Agent
 
 from functools import partial
-import math
+from math import inf, log
 
 
-def ln(x): return math.log(x) if x > 0 else -math.inf
+def ln(x): return log(x) if x > 0 else -inf
 
 
 class ReflexAgent(Agent):
@@ -155,8 +155,28 @@ class MinimaxAgent(MultiAgentSearchAgent):
         gameState.isLose():
         Returns whether or not the game state is a losing state
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        def minimax(state, depth, agent):
+            '''
+                Returns the best value-action pair for the agent
+            '''
+            nextDepth = depth-1 if agent == 0 else depth
+            if nextDepth == 0 or state.isWin() or state.isLose():
+                return self.evaluationFunction(state), None
+
+            bestOf, bestVal = (max, -inf) if agent == 0 else (min, inf)
+            nextAgent = (agent + 1) % state.getNumAgents()
+            bestAction = None
+            for action in state.getLegalActions(agent):
+                successorState = state.generateSuccessor(agent, action)
+                valOfAction, _ = minimax(successorState, nextDepth, nextAgent)
+                if bestOf(bestVal, valOfAction) == valOfAction:
+                    bestVal = valOfAction
+                    bestAction = action
+            return bestVal, bestAction
+
+        val, action = minimax(gameState, self.depth+1, self.index)
+        return action
 
 
 class AlphaBetaAgent(MultiAgentSearchAgent):

@@ -182,7 +182,38 @@ When Pacman believes that his death is unavoidable, he will try to end the game 
 `python pacman.py -p MinimaxAgent -l trappedClassic -a depth=3`
 
 Make sure you understand why Pacman rushes the closest ghost in this case.
-Question 3 (5 points): Alpha-Beta Pruning
+
+## Answer
+
+```py
+def getAction(self, gameState):
+
+    def minimax(state, depth, agent):
+        '''
+            Returns the best value-action pair for the agent
+        '''
+        nextDepth = depth-1 if agent == 0 else depth
+        if nextDepth == 0 or state.isWin() or state.isLose():
+            return self.evaluationFunction(state), None
+
+        bestOf, bestVal = (max, -inf) if agent == 0 else (min, inf)
+        nextAgent = (agent + 1) % state.getNumAgents()
+        bestAction = None
+        for action in state.getLegalActions(agent):
+            successorState = state.generateSuccessor(agent, action)
+            valOfAction, _ = minimax(successorState, nextDepth, nextAgent)
+            if bestOf(bestVal, valOfAction) == valOfAction:
+                bestVal = valOfAction
+                bestAction = action
+        return bestVal, bestAction
+
+    val, action = minimax(gameState, self.depth+1, self.index)
+    return action
+```
+
+---
+
+## Question 3 (5 points): Alpha-Beta Pruning
 
 Make a new agent that uses alpha-beta pruning to more efficiently explore the minimax tree, in `AlphaBetaAgent`. Again, your algorithm will be slightly more general than the pseudocode from lecture, so part of the challenge is to extend the alpha-beta pruning logic appropriately to multiple minimizer agents.
 
