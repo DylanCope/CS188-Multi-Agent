@@ -33,7 +33,6 @@ _canvas_col = None      # Current colour (set to black below)
 _canvas_tsize = 12
 _canvas_tserifs = 0
 
-
 def formatColor(r, g, b):
     return '#%02x%02x%02x' % (int(r * 255), int(g * 255), int(b * 255))
 
