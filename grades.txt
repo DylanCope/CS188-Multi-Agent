@@ -1,24 +1,24 @@
-Starting on 11-19 at 12:41:51
+Starting on 11-19 at 21:21:58
 
 Question q1
 ===========
 
-Pacman emerges victorious! Score: 993
-Pacman emerges victorious! Score: 1293
-Pacman emerges victorious! Score: 1035
-Pacman emerges victorious! Score: 1056
-Pacman emerges victorious! Score: 1044
-Pacman emerges victorious! Score: 972
-Pacman emerges victorious! Score: 884
-Pacman emerges victorious! Score: 1152
-Pacman emerges victorious! Score: 1026
-Pacman emerges victorious! Score: 962
-Average Score: 1041.7
-Scores:        993.0, 1293.0, 1035.0, 1056.0, 1044.0, 972.0, 884.0, 1152.0, 1026.0, 962.0
+Pacman emerges victorious! Score: 1238
+Pacman emerges victorious! Score: 1244
+Pacman emerges victorious! Score: 1239
+Pacman emerges victorious! Score: 1235
+Pacman emerges victorious! Score: 1233
+Pacman emerges victorious! Score: 1241
+Pacman emerges victorious! Score: 1246
+Pacman emerges victorious! Score: 1242
+Pacman emerges victorious! Score: 1239
+Pacman emerges victorious! Score: 1242
+Average Score: 1239.9
+Scores:        1238.0, 1244.0, 1239.0, 1235.0, 1233.0, 1241.0, 1246.0, 1242.0, 1239.0, 1242.0
 Win Rate:      10/10 (1.00)
 Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win
 *** PASS: test_cases\q1\grade-agent.test (4 of 4 points)
-***     1041.7 average score (2 of 2 points)
+***     1239.9 average score (2 of 2 points)
 ***         Grading scheme:
 ***          < 500:  0 points
 ***         >= 500:  1 points
@@ -170,13 +170,42 @@ Record:        Loss
 Question q5
 ===========
 
-*** Method not implemented: betterEvaluationFunction at line 280 of multiAgents.py
-*** FAIL: Terminated with a string exception.
+Pacman died! Score: -475
+Pacman died! Score: -398
+Pacman died! Score: -254
+Pacman died! Score: -604
+Pacman died! Score: -467
+Pacman died! Score: -468
+Pacman died! Score: -436
+Pacman died! Score: -242
+Pacman died! Score: -423
+Pacman died! Score: -394
+Average Score: -416.1
+Scores:        -475.0, -398.0, -254.0, -604.0, -467.0, -468.0, -436.0, -242.0, -423.0, -394.0
+Win Rate:      0/10 (0.00)
+Record:        Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss, Loss
+*** FAIL: test_cases\q5\grade-agent.test (0 of 6 points)
+***     -416.1 average score (0 of 2 points)
+***         Grading scheme:
+***          < 500:  0 points
+***         >= 500:  1 points
+***         >= 1000:  2 points
+***     10 games not timed out (1 of 1 points)
+***         Grading scheme:
+***          < 0:  fail
+***         >= 0:  0 points
+***         >= 10:  1 points
+***     0 wins (fail: below minimum value 1)
+***         Grading scheme:
+***          < 1:  fail
+***         >= 1:  1 points
+***         >= 5:  2 points
+***         >= 10:  3 points
 
 ### Question q5: 0/6 ###
 
 
-Finished at 12:42:12
+Finished at 21:22:18
 
 Provisional grades
 ==================
