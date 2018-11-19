@@ -129,18 +129,21 @@ def evaluationFunction(self, currentGameState, action):
     newGhostStates = successorGameState.getGhostStates()
 
     distToPacman = partial(manhattanDistance, newPos)
-    ghostScore = 0.01 * min(
-        ln(distToPacman(ghost.getPosition()) - 1 + ghost.scaredTimer)
-        for ghost in newGhostStates
-    )
 
-    totalFoodFeature = 1.0 / (1.0 + newFood.count())
+    def ghostF(ghost):
+        dist = distToPacman(ghost.getPosition())
+        if ghost.scaredTimer > dist:
+            return inf
+        if dist <= 1:
+            return -inf
+        return 0
+    ghostScore = min(map(ghostF, newGhostStates))
 
-    ghostPositions = [ghost.getPosition() for ghost in newGhostStates]
-    distToClosestFood = min(map(distToPacman, ghostPositions), default=0)
-    closestFoodFeature = 10 / (1.0 + distToClosestFood)
+    distToClosestFood = min(
+        map(distToPacman, newFood.asList()), default=inf)
+    closestFoodFeature = 1.0 / (1.0 + distToClosestFood)
 
-    return successorGameState.getScore() + ghostScore + totalFoodFeature + closestFoodFeature
+    return successorGameState.getScore() + ghostScore + closestFoodFeature
 ```
 
 ---
