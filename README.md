@@ -314,6 +314,49 @@ The correct implementation of expectimax will lead to Pacman losing some of the 
 
 ## Answer
 
+```py
+def getAction(self, gameState):
+    """
+    Returns the expectimax action using self.depth and self.evaluationFunction
+
+    All ghosts should be modeled as choosing uniformly at random from their
+    legal moves.
+    """
+    agent = self.index
+    if agent != 0:
+        return random.choice(state.getLegalActions(agent))
+
+    def expectimax(state, depth, agent):
+        '''
+            Returns the best value-action pair for the agent
+        '''
+        nextDepth = depth-1 if agent == 0 else depth
+        if nextDepth == 0 or state.isWin() or state.isLose():
+            return self.evaluationFunction(state), None
+
+        nextAgent = (agent + 1) % state.getNumAgents()
+        legalMoves = state.getLegalActions(agent)
+        if agent != 0:
+            prob = 1.0 / float(len(legalMoves))
+            value = 0.0
+            for action in legalMoves:
+                successorState = state.generateSuccessor(agent, action)
+                expVal, _ = expectimax(successorState, nextDepth, nextAgent)
+                value += prob * expVal
+            return value, None
+
+        bestVal, bestAction = -inf, None
+        for action in legalMoves:
+            successorState = state.generateSuccessor(agent, action)
+            expVal, _ = expectimax(successorState, nextDepth, nextAgent)
+            if max(bestVal, expVal) == expVal:
+                bestVal, bestAction = expVal, action
+        return bestVal, bestAction
+
+    _, action = expectimax(gameState, self.depth+1, self.index)
+    return action
+```
+
 ## Question 5 (6 points): Evaluation Function
 
 Write a better evaluation function for Pacman in the provided function `betterEvaluationFunction`. The evaluation function should evaluate states, rather than actions like your reflex agent evaluation function did. You may use any tools at your disposal for evaluation, including your search code from the last project. With depth 2 search, your evaluation function should clear the `smallClassic` layout with one random ghost more than half the time and still run at a reasonable rate (to get full credit, Pacman should be averaging around 1000 points when he's winning).
