@@ -186,42 +186,37 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
     def getAction(self, gameState):
         """
-        Returns the minimax action using self.depth and self.evaluationFunction
+        Returns the alpha-beta pruned minimax action using self.depth and self.evaluationFunction
         """
 
         def alphaBeta(state, depth, alpha, beta, agent):
-            nextDepth = depth-1 if agent == 0 else depth
+            isMax = agent == 0
+            nextDepth = depth-1 if isMax else depth
             if nextDepth == 0 or state.isWin() or state.isLose():
                 return self.evaluationFunction(state), None
 
             nextAgent = (agent + 1) % state.getNumAgents()
+            bestVal = -inf if isMax else inf
+            bestAction = None
+            bestOf = max if isMax else min
 
-            if agent == 0:
+            for action in state.getLegalActions(agent):
+                successorState = state.generateSuccessor(agent, action)
+                valOfAction, _ = alphaBeta(
+                    successorState, nextDepth, alpha, beta, nextAgent)
+                if bestOf(bestVal, valOfAction) == valOfAction:
+                    bestVal, bestAction = valOfAction, action
 
-                bestVal, bestAction = -inf, None
-                for action in state.getLegalActions(agent):
-                    successorState = state.generateSuccessor(agent, action)
-                    valOfAction, _ = alphaBeta(
-                        successorState, nextDepth, alpha, beta, nextAgent)
-                    if max(bestVal, valOfAction) == valOfAction:
-                        bestVal, bestAction = valOfAction, action
+                if isMax:
                     if bestVal > beta:
                         return bestVal, bestAction
                     alpha = max(alpha, bestVal)
-                return bestVal, bestAction
-
-            else:
-                bestVal, bestAction = inf, None
-                for action in state.getLegalActions(agent):
-                    successorState = state.generateSuccessor(agent, action)
-                    valOfAction, _ = alphaBeta(
-                        successorState, nextDepth, alpha, beta, nextAgent)
-                    if min(bestVal, valOfAction) == valOfAction:
-                        bestVal, bestAction = valOfAction, action
+                else:
                     if bestVal < alpha:
                         return bestVal, bestAction
                     beta = min(beta, bestVal)
-                return bestVal, bestAction
+
+            return bestVal, bestAction
 
         _, action = alphaBeta(gameState, self.depth+1, -inf, inf, self.index)
         return action
