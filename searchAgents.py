@@ -654,7 +654,7 @@ def mazeDistance(gameState, point1, point2):
     you have already built. The gameState can be any game state -- Pacman's
     position in that state is ignored.
 
-    Example usage: mazeDistance( (2,4), (5,6), gameState)
+    Example usage: mazeDistance( gameState, (2,4), (5,6) )
 
     This might be a useful helper function for your ApproximateSearchAgent.
     """

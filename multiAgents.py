@@ -20,6 +20,9 @@ from game import Agent
 
 from functools import partial
 from math import inf, log
+import numpy as np
+
+from searchAgents import mazeDistance, FoodSearchProblem, foodHeuristic
 
 
 def ln(x): return log(x) if x > 0 else -inf
@@ -272,6 +275,9 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         return action
 
 
+foodSearch = None
+
+
 def betterEvaluationFunction(currentGameState):
     """
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
@@ -279,7 +285,38 @@ def betterEvaluationFunction(currentGameState):
 
     DESCRIPTION: <write something here so we know what you did>
     """
-    return random.randint(0, 10)
+
+    pos = currentGameState.getPacmanPosition()
+    food = currentGameState.getFood()
+    ghostStates = currentGameState.getGhostStates()
+
+    distToPacman = partial(mazeDistance, currentGameState, pos)
+
+    def ghostF(ghost):
+        ghostPos = tuple(map(int, ghost.getPosition()))
+        ghostToPacmanDistance = distToPacman(ghostPos)
+        if ghostToPacmanDistance <= 1:
+            if ghost.scaredTimer >= 1:
+                return inf
+            return -inf
+        return 0
+    ghostScore = min(map(ghostF, ghostStates))
+
+    # distToClosestFood = min(map(distToPacman, food.asList()), default=inf)
+    # closestFoodFeature = 1.0 / (0.1 + distToClosestFood)
+
+    global foodSearch
+    if foodSearch == None:
+        foodSearch = FoodSearchProblem(currentGameState)
+    numFood = len(food.asList())
+    foodEaten = len(foodSearch.start[1].asList()) - numFood
+    # totalFoodFeature = 1.0 / (0.1 + numFood)
+    if numFood < 20:
+        closestFoodFeature = 1.0 / \
+            (1.0 + foodHeuristic((pos, food), foodSearch))
+    else:
+        closestFoodFeature = 0
+    return ghostScore + closestFoodFeature + foodEaten
 
 
 # Abbreviation
